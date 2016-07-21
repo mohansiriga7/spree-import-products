@@ -3,31 +3,40 @@
 <% end %>
 
 <div class="row">
-<div class="col-sm-6">
+
 <%= form_for([:admin, @product_import], :method => :post, :html => { :multipart => true }) do |f| %>
+
   <fieldset class="no-border-top">
-  <%= f.field_container :data_file, class: ['form-group'] do  %>
-    <%= f.label :data_file, t('form.product_import.new.data_file') %><br />
-    <%= f.file_field :data_file %>
-    <%= f.error_message_on :data_file %>
-  <% end %>
-  <div class="field">
-    <%= f.label :separatorChar, t('form.product_import.separator_char') %><br />
-    <%= f.text_field :separatorChar, class: 'form-control required',:id =>  "separatorChar",:value => ";" ,:size => 1, :maxlength => 1 %>
-  </div>
-  <div class="field">
-    <%= f.label :encoding_csv, t('form.product_import.encoding') %><br />
-    <%= f.select(:encoding_csv,
-                   options_from_collection_for_select(Spree::ProductImport::ENCODINGS, :to_s, :to_s, 'UTF-8'),
-                   {:class => 'select2', :prompt => false}) %>
-  </div>
-  <div data-hook="buttons" class="form-actions">
-    <%= button Spree.t('actions.import'), 'ok', 'submit', {class: 'btn-success'} %>
-  </div>
+    <div class="form-group col-md-3">
+      <%= f.field_container :data_file, class: ['form-group'] do  %>
+        <%= f.label :data_file, t('form.product_import.new.data_file') %><br />
+        <%= f.file_field :data_file %>
+        <%= f.error_message_on :data_file %>
+      <% end %>
+    </div>
+    <div class="form-group col-md-3">
+      <div class="field">
+        <%= f.label :separatorChar, t('form.product_import.separator_char') %><br />
+        <%= f.text_field :separatorChar, class: 'form-control required',:id =>  "separatorChar",:value => ";" ,:size => 1, :maxlength => 1 %>
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <div class="field">
+        <%= f.label :encoding_csv, t('form.product_import.encoding') %><br />
+        <%= f.select(:encoding_csv,
+                       options_from_collection_for_select(Spree::ProductImport::ENCODINGS, :to_s, :to_s, 'UTF-8'), {},
+                       {:class => 'select2', :prompt => false}) %>
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <div data-hook="buttons" class="form-actions">
+        <%= button Spree.t('actions.import'), 'ok', 'submit', {class: 'btn-success'} %>
+      </div>
+    </div>
   </fieldset>
 
 <% end %>
-</div>
+
 </div>
 <table class="table">
   <colgroup>
