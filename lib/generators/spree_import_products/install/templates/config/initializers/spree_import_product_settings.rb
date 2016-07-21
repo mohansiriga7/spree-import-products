@@ -2,10 +2,7 @@ require 'active_job'
 ActiveJob::Base.queue_adapter = :delayed_job
 Delayed::Worker.backend = :active_record
 Delayed::Worker.sleep_delay = 10
-# Rails 4.1
-Delayed::Worker.destroy_failed_jobs = true
-# Rails 4.2
-#Delayed::Job.destroy_failed_jobs = false
+Delayed::Job.destroy_failed_jobs = false
 # This file is the thing you have to config to match your application
 
 Spree::ProductImport.settings = {
