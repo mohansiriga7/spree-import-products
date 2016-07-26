@@ -23,7 +23,7 @@ class ImportProductsJob < ActiveJob::Base
 
   def notify_admin
     products = Spree::ProductImport.find(@product_id)
-    store = Spree::ProductImport.find(@store_id)
+    store = Spree::Store.find(@store_id)
     user = Spree::User.find(products.created_by)
     #log("USER: #{user.email}")
     Spree::UserMailer.product_import_results(user, store).deliver
