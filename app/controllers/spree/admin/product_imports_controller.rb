@@ -41,7 +41,10 @@ module Spree
         if @product_import.destroy
           flash[:success] = t('delete_product_import_successful')
         end
-        redirect_to admin_product_imports_path
+        respond_with(@product) do |format|
+          format.html { redirect_to collection_url }
+          format.js  { render_js_for_destroy }
+        end
       end
 
       private
