@@ -16,8 +16,7 @@ module Spree
 				@product_import.created_by=spree_current_user.id
 				@product_import.save
         begin
-          numProds=@product_import.productsCount
-          if numProds > Spree::ProductImport.settings[:num_prods_for_delayed]
+          if @product_import.productsCount > Spree::ProductImport.settings[:num_prods_for_delayed]
             ImportProductsJob.perform_later(@product_import.id, current_store.id)
 					  flash[:notice] = t('product_import_processing')
           else
@@ -30,7 +29,7 @@ module Spree
           if (e.is_a?(OpenURI::HTTPError))
             flash[:error] = t('product_import_http_error')
           else
-            flash[:error] = e.message
+            flash[:error] = "Error in controller: #{e.message} - #{e.backtrace[0]}"
           end
         end
         redirect_to admin_product_imports_path
