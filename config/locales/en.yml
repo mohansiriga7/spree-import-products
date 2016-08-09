@@ -11,7 +11,7 @@ en:
     state:
       created: "Created"
       started: "In Progress"
-      completed: "Completed"
+      completed: "Imported"
       failed: "Failed"
   form:
     product_import:

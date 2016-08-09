@@ -9,10 +9,10 @@ ru:
   confirm_delete_product_import: "Удаление импорта уничтожит связанные товары. Продолжить?"
   product_import:
     state:
-      created: "Создан"
-      started: "В процессе"
-      completed: "Готово"
-      failed: "Ошибка"
+      created: Загружено
+      failed: Ошибка
+      completed: Импортировано
+      started: Обрабатывается
   form:
     product_import:
       heading: 'Импорт из CSV'
