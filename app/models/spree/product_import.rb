@@ -225,7 +225,7 @@ module Spree
           if (product.respond_to?("#{field}=") and params_hash[:locale].nil?)
             product.send("#{field}=", value)
           end
-        elsif not special_fields.include?(field.to_s) and property = Property.where("name = ?", field).first
+        elsif not special_fields.include?(field.to_s) and property = Property.where("name = ?", field).first and value.present?
           properties_hash[property] = value
         end
       end
