@@ -189,7 +189,7 @@ module Spree
       params_hash.each do |field, value|
         if product.respond_to?("#{field}=")
           product.send("#{field}=", value)
-        elsif not special_fields.include?(field.to_s) and property = Property.where("lower(name) = ?", field).first
+        elsif not special_fields.include?(field.to_s) and property = Property.where("lower(name) = ?", field).first and value.present?
           properties_hash[property] = value
         end
       end
