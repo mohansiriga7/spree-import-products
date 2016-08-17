@@ -189,7 +189,7 @@ module Spree
       params_hash.each do |field, value|
         if product.respond_to?("#{field}=")
           product.send("#{field}=", value)
-        elsif not special_fields.include?(field.to_s) and property = Property.where("lower(name) = ?", field).first and value.present?
+        elsif not special_fields.include?(field.to_s) and property = Property.where("name = ?", field).first and value.present?
           properties_hash[property] = value
         end
       end
@@ -225,7 +225,7 @@ module Spree
           if (product.respond_to?("#{field}=") and params_hash[:locale].nil?)
             product.send("#{field}=", value)
           end
-        elsif not special_fields.include?(field.to_s) and property = Property.where("lower(name) = ?", field).first
+        elsif not special_fields.include?(field.to_s) and property = Property.where("name = ?", field).first
           properties_hash[property] = value
         end
       end
@@ -325,7 +325,7 @@ module Spree
         #We only applu OptionTypes if value is not null.
         if (value)
           applicable_option_type = OptionType.where(
-              "lower(presentation) = ? OR lower(name) = ?",
+              "presentation = ? OR name = ?",
               field.to_s, field.to_s).first
           if applicable_option_type.is_a?(OptionType)
             product.option_types << applicable_option_type unless product.option_types.include?(applicable_option_type)
@@ -484,7 +484,7 @@ module Spree
 
       taxon_hierarchy.split(/\s*\|\s*/).each do |hierarchy|
         hierarchy = hierarchy.split(/\s*>\s*/)
-        taxonomy = Spree::Taxonomy.where("lower(name) = ?", hierarchy.first.downcase).first
+        taxonomy = Spree::Taxonomy.where("name = ?", hierarchy.first.downcase).first
         taxonomy = Taxonomy.create(:name => hierarchy.first.capitalize) if taxonomy.nil? && ProductImport.settings[:create_missing_taxonomies]
         last_taxon = taxonomy.root
 
