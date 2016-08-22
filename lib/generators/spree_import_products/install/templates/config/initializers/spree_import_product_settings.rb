@@ -2,7 +2,6 @@ require 'active_job'
 ActiveJob::Base.queue_adapter = :delayed_job
 Delayed::Worker.backend = :active_record
 Delayed::Worker.sleep_delay = 10
-Delayed::Job.destroy_failed_jobs = false
 # This file is the thing you have to config to match your application
 
 Spree::ProductImport.settings = {
@@ -40,5 +39,7 @@ Spree::ProductImport.settings = {
     :variant_comparator_field_i18n => :slugi18n, #CSV column with translation of variant_comparator_field. Not used yet.
     :multi_domain_importing => false, #If Spree's multi_domain extension is installed, associates products with store.
     :store_field => :store_code, #Which field of the column mappings contains either the store id or store code?
-    :transaction => true #import product in a sql transaction so we can rollback when an exception is raised
+    :transaction => true, #import product in a sql transaction so we can rollback when an exception is raised
+    :images_field => :image_list, #any count of images in one column
+    :images_field_deliver => '|', #deliver beetween images name in images_field
 }
