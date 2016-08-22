@@ -17,7 +17,7 @@
     <div class="form-group col-md-3">
       <div class="field">
         <%= f.label :separatorChar, t('form.product_import.separator_char') %><br />
-        <%= f.text_field :separatorChar, class: 'form-control required',:id =>  "separatorChar",:value => ";" ,:size => 1, :maxlength => 1 %>
+        <%= f.text_field :separatorChar, class: 'form-control required',:id =>  "separatorChar",:value => "," ,:size => 1, :maxlength => 1 %>
       </div>
     </div>
     <div class="form-group col-md-3">
@@ -67,7 +67,7 @@
       <td><%= label_products_import(import) %></span></td>
       <td><%= I18n.l(import.state_datetime.to_datetime,format: :short) %></td>
       <td><%= import.product_ids.size -%></td>
-      <td><%= import.error_message%></td>
+      <td><%= truncate(import.error_message, length: 100)%></td>
       <td class="actions text-center">
         <%= link_to_edit import, :url => admin_product_import_path(import), :no_text => true -%>
       </td>
