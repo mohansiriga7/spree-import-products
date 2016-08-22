@@ -24,7 +24,7 @@ module Spree
 					  flash[:success] = t('product_import_imported')
             end
         rescue StandardError => e
-          @product_import.error_message=e.message
+          @product_import.error_message=e.message+ ' ' + e.backtrace.inspect
           @product_import.failure
           if (e.is_a?(OpenURI::HTTPError))
             flash[:error] = t('product_import_http_error')
