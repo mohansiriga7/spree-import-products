@@ -279,6 +279,12 @@ module Spree
         find_and_attach_image_to(product, params_hash[field.to_sym], params_hash[ProductImport.settings[:image_text_products].to_sym])
       end
 
+      if ProductImport.settings[:images_field] && images = params_hash[ProductImport.settings[:images_field].to_sym]
+        images.split(ProductImport.settings[:images_field_deliver] || '|').each do |image_address|
+          find_and_attach_image_to(product, image_address, params_hash[ProductImport.settings[:image_text_products].to_sym])
+        end
+      end
+
       if ProductImport.settings[:multi_domain_importing] && product.respond_to?(:stores)
         begin
           store = Store.find(
