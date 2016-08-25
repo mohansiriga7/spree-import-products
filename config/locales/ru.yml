@@ -20,3 +20,16 @@ ru:
       encoding: "Кодировка"
       new:
         data_file: "Файл с данными"
+  actions:
+    import: "Импортировать"
+  table:
+    creation_date: "Дата создания"
+    csv_name: "Название csv файла"
+    status: "Статус"
+    date_status: "Дата изменения"
+    imported: "Кол-во импортированных товаров"
+    error_message: "Сообщение об ошибке"
+    actions: "Действия"
+  show_product_import: "Детали импорта"
+  sku: "Идентификатор товарной позиции (SKU)"
+  master_price: "Базовая цена"

@@ -30,7 +30,7 @@
     </div>
     <div class="form-group col-md-3">
       <div data-hook="buttons" class="form-actions">
-        <%= button Spree.t('actions.import'), 'ok', 'submit', {class: 'btn-success'} %>
+        <%= button t('actions.import'), 'ok', 'submit', {class: 'btn-success'} %>
       </div>
     </div>
   </fieldset>
@@ -50,13 +50,13 @@
   </colgroup>
   <thead>
   <tr>
-    <th>Date creation</th>
-    <th>CSV Name</th>
-    <th>Status</th>
-    <th>Date Status</th>
-    <th>Imported</th>
-    <th>Error Message</th>
-    <th class="actions">Actions</th>
+    <th><%= t('table.creation_date') %></th>
+    <th><%= t('table.csv_name') %></th>
+    <th><%= t('table.status') %></th>
+    <th><%= t('table.date_status') %></th>
+    <th><%= t('table.imported') %></th>
+    <th><%= t('table.error_message') %></th>
+    <th class="actions"><%= t('table.actions') %></th>
   </tr>
   </thead>
   <tbody>
