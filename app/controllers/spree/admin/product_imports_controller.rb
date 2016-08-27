@@ -19,6 +19,7 @@ module Spree
           data_files.each do |data_file|
             import["data_file"] = data_file
             @product_import = Spree::ProductImport.create(import)
+            ImportProductsJob.perform_later(@product_import.id, current_store.id)
           end
           redirect_to admin_product_imports_path
           return
