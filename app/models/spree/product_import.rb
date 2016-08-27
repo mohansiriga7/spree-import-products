@@ -279,8 +279,8 @@ module Spree
       end
 
       if ProductImport.settings[:images_field] && images = params_hash[ProductImport.settings[:images_field].to_sym]
-        images.split(ProductImport.settings[:images_field_deliver] || '|').each do |image_address|
-          find_and_attach_image_to(product, image_address, params_hash[ProductImport.settings[:image_text_products].to_sym])
+        images.split(ProductImport.settings[:images_field_deliver] || '|').each_with_index do |image_address, position|
+          find_and_attach_image_to(product, image_address, params_hash[ProductImport.settings[:image_text_products].to_sym], 1 + position*10)
         end
       end
 
@@ -416,8 +416,10 @@ module Spree
     # find_and_attach_image_to
     # This method attaches images to products. The images may come
     # from a local source (i.e. on disk), or they may be online (HTTP/HTTPS).
-    def find_and_attach_image_to(product_or_variant, filename,alt_text)
+    def find_and_attach_image_to(product_or_variant, filename,alt_text, position = nil)
       return if filename.blank?
+
+      position = product_or_variant.images.length if !position
 
       #The image can be fetched from an HTTP or local source - either method returns a Tempfile
       file = filename =~ /\Ahttp[s]*:\/\// ? fetch_remote_image(filename) : fetch_local_image(filename)
@@ -427,12 +429,12 @@ module Spree
                                         :viewable_id => product_or_variant.id,
                                         :viewable_type => "Spree::Variant",
                                         :alt => alt_text,
-                                        :position => product_or_variant.images.length
+                                        :position => position,
                                        })
 
       log("#{product_image.viewable_id} : #{product_image.viewable_type} : #{product_image.position}",:debug)
 
-      product_or_variant.images << product_image if product_image.save
+      product_or_variant.images << product_image
     end
 
     # This method is used when we have a set location on disk for
