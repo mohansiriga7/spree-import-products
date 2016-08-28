@@ -425,12 +425,13 @@ module Spree
       file = filename =~ /\Ahttp[s]*:\/\// ? fetch_remote_image(filename) : fetch_local_image(filename)
 
       #An image has an attachment (the image file) and some object which 'views' it
-      product_image = Spree::Image.new({:attachment => file,
+      product_image = Spree::Image.create({:attachment => file,
                                         :viewable_id => product_or_variant.id,
                                         :viewable_type => "Spree::Variant",
                                         :alt => alt_text,
                                         :position => position,
                                        })
+      file.close if file.is_a? File
 
       log("#{product_image.viewable_id} : #{product_image.viewable_type} : #{product_image.position}",:debug)
 
