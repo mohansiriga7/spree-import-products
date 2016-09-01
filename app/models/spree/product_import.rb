@@ -326,17 +326,24 @@ module Spree
       log("VARIANT:: #{variant.inspect}  /// #{options.inspect } /// #{options[:with][field]} /// #{field}",:debug)
 
       options[:with].each do |field, value|
+        log("options[:with]:: #{field}, #{value}", :debug)
         variant.send("#{field}=", value) if variant.respond_to?("#{field}=")
         #We only applu OptionTypes if value is not null.
         if (value)
+          log("options[:with]:: OptionType.where", :debug)
           applicable_option_type = OptionType.where(
               "presentation = ? OR name = ?",
               field.to_s, field.to_s).first
           if applicable_option_type.is_a?(OptionType)
+            log("options[:with]:: 1", :debug)
             product.option_types << applicable_option_type unless product.option_types.include?(applicable_option_type)
+            log("options[:with]:: 2", :debug)
             opt_value = applicable_option_type.option_values.where(["presentation = ? OR name = ?", value, value]).first
+            log("options[:with]:: 3", :debug)
             opt_value = applicable_option_type.option_values.create(:presentation => value, :name => value) unless opt_value
+            log("options[:with]:: 4", :debug)
             variant.option_values << opt_value unless variant.option_values.include?(opt_value)
+            log("options[:with]:: 5", :debug)
           end
         end
       end
