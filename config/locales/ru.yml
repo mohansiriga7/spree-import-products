@@ -1,4 +1,7 @@
 ru:
+  spree:
+    product_import:
+      select_files: Выберите файлы
   product_import_imported: "Продукты успешно импортированы"
   back_to_product_imports: "Вернутся к импорту продуктов"
   product_import_http_error: "Ошибка загрузки файла. Удостоверьтесь что файл сохранён как текст"

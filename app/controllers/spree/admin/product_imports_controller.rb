@@ -15,6 +15,11 @@ module Spree
         import = product_import_params.to_h
         import.merge!(created_by: spree_current_user.id)
         data_files = import.delete("data_file")
+        if !data_files
+          flash[:error] = Spree.t('select_files', scope: 'product_import')
+          redirect_to admin_product_imports_path
+          return
+        end
         if data_files.size > 1
           data_files.each do |data_file|
             import["data_file"] = data_file
