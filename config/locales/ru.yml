@@ -5,7 +5,7 @@ ru:
   product_import_imported: "Продукты успешно импортированы"
   back_to_product_imports: "Вернутся к импорту продуктов"
   product_import_http_error: "Ошибка загрузки файла. Удостоверьтесь что файл сохранён как текст"
-  product_import_processing: 'Ваш импорт добавлен в очередь. На почту придет извещение по окончании импорта..'
+  product_import_processing: 'Ваш импорт добавлен в очередь'
   product_imports: 'Импорт'
   delete_product_import: "Удалить"
   delete_product_import_successful: "Импорт и связанные товары удалены"

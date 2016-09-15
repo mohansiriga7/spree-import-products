@@ -1,14 +1,11 @@
 class ImportProductsJob < ActiveJob::Base
   queue_as :default
 
-  after_perform :notify_admin
-
   rescue_from(StandardError) do |exception|
     Rails.logger.error("[ActiveJob] [#{self.class}] [#{job_id}] ID: #{@product_id} #{exception}")
     products = Spree::ProductImport.find(@product_id)
     store = Spree::Store.find(@store_id)
     user = Spree::User.find(products.created_by)
-    Spree::UserMailer.product_import_results(user, store, exception.message + " " + exception.backtrace.join("\n")).deliver
     #Hacemos aquí el update para que aunque falle, enviemos el mail igualmente
     products.error_message = exception.message + ' ' + exception.backtrace.inspect
     products.failure
@@ -19,14 +16,6 @@ class ImportProductsJob < ActiveJob::Base
     @store_id = current_store_id
     products = Spree::ProductImport.find(product_id)
     products.import_data!(true)
-  end
-
-  def notify_admin
-    products = Spree::ProductImport.find(@product_id)
-    store = Spree::Store.find(@store_id)
-    user = Spree::User.find(products.created_by)
-    #log("USER: #{user.email}")
-    Spree::UserMailer.product_import_results(user, store).deliver
   end
 
   private
