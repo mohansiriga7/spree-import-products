@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency('spree_auth_devise')
   s.add_dependency('delayed_job_active_record')
   s.add_dependency('daemons')
+  s.add_dependency('coffee-script')
 
   #s.add_development_dependency('spree_sample')
   s.add_development_dependency('sqlite3')
