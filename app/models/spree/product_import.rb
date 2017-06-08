@@ -239,7 +239,7 @@ module Spree
       #We can't continue without a valid product here
       unless product.valid?
         log(msg = "A product could not be imported - here is the information we have:\n" +
-            "#{pp params_hash}, #{product.inspect} #{product.errors.full_messages.join(', ')}",:error)
+            "#{pp params_hash}, #{product.inspect} \nProduct errors: #{product.errors.full_messages.join(', ')}",:error)
         raise ProductError, msg
       end
 
