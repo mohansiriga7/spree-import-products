@@ -72,8 +72,11 @@ module Spree
         it "tracks product created ids" do
           valid_import.import_data!
           valid_import.reload
-          valid_import.product_ids.should == [Product.last.id]
-          valid_import.products.should == [Product.last]
+
+          spree_ids = Spree::Product.all.map(&:id)
+          valid_import.product_ids.each do |import_id|
+            expect(spree_ids.include?(import_id))
+          end
         end
 
         it "handles product properties" do
