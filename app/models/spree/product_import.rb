@@ -62,7 +62,7 @@ module Spree
     end
     #Return the number of rows in CSV.
     def productsCount
-      rows = CSV.parse(open(self.data_file.path).read, :col_sep => separatorChar)
+      rows = CSV.parse(open(self.data_file.path).read, :col_sep => separator_char)
 			#rows = CSV.parse(open(self.data_file.url).read, :col_sep => ",", :quote_char => "'")
       return rows.count
     end
@@ -102,10 +102,14 @@ module Spree
     def _import_data
       begin
         log("import data start",:debug)
+
         @products_before_import = Spree::Product.all
         @skus_of_products_before_import = @products_before_import.map(&:sku)
-        csv_string=open(self.data_file.path,"r:#{encoding_csv}").read.encode('utf-8')
-        rows = CSV.parse(csv_string, :col_sep => separatorChar)
+
+        # get csv string, normalize encoding to utf-8
+        csv_string = open(data_file.path, "r:#{encoding_csv}").read.encode('utf-8')
+
+        rows = CSV.parse(csv_string, col_sep: separator_char)
 
         if ProductImport.settings[:first_row_is_headings]
           col = get_column_mappings(rows[0])
@@ -170,6 +174,13 @@ module Spree
     end
 
     private
+
+    # The user defined or default separator character for the CSV.
+    # Wrapper for original separatorChar, defaults to ',' now.
+    def separator_char
+      # unclear (to me) how separatorChar is defined by user.
+      separatorChar || ','
+    end
 
     def create_product(params_hash)
 
