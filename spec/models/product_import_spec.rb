@@ -108,7 +108,7 @@ module Spree
 
           it "sets state to failed" do
             expect { invalid_import.import_data! }.to raise_error(ImportError)
-            invalid_import.reload.state.should == "failed"
+            expect(invalid_import.state).to eq "failed"
           end
         end
 

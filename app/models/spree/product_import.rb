@@ -169,6 +169,7 @@ module Spree
         #end
 
       rescue => err
+        failure
         log(msg="The import failed with this error: " + err.inspect, :error)
         raise ImportError, msg
       end
