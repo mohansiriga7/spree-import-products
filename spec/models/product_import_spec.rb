@@ -7,10 +7,11 @@ module Spree
         product; size; color; option_color; option_size
       end
 
-      let(:product) { FactoryGirl.create(:product, :sku => "001", :permalink => "S0388G-bloch-kids-tap-flexewe") }
       let(:size) { FactoryGirl.create(:option_type, :name => "tshirt-size") }
       let(:color) { FactoryGirl.create(:option_type, :name => "tshirt-color", :presentation => "Color") }
       let(:option_color) { FactoryGirl.create(:option_value, :name => "blue", :presentation => "Blue", :option_type => color) }
+      # let(:product) { FactoryGirl.create(:product, :sku => "001", :permalink => "S0388G-bloch-kids-tap-flexewe") } # UndefinedMethod: permalink=
+      let(:product) { FactoryGirl.create(:product, sku: '001') }
       let(:option_size) { FactoryGirl.create(:option_value, :name => "s", :presentation => "Small", :option_type => size) }
 
       let(:params) do
