@@ -167,6 +167,10 @@ module Spree
         #if ProductImport.settings[:destroy_original_products]
         #@products_before_import.each { |p| p.destroy }
         #end
+
+      rescue => err
+        log(msg="The import failed with this error: " + err.inspect, :error)
+        raise ImportError, msg
       end
       # Finished Importing!
       complete
