@@ -33,4 +33,5 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
   config.include Spree::UrlHelpers
+  config.include AuthenticationHelpers
 end
