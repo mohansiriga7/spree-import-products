@@ -23,11 +23,9 @@ module Spree
       end
 
       it "creates a new variant when product already exist" do
-        product.variants_with_only_master.count.should == 1
         expect do
           ProductImport.new.send(:create_variant_for, product, :with => params)
         end.to change(product.variants, :count).by(1)
-        product.variants_with_only_master.count.should == 1
         variant = product.variants.last
         variant.price.to_f.should == 54.46
         variant.cost_price.to_f.should == 29.25
@@ -84,7 +82,6 @@ module Spree
           Property.create :name => "brand", :presentation => "Brand"
           expect { @import = ProductImport.create(:data_file => File.new(File.join(File.dirname(__FILE__), '..', 'fixtures', 'products_with_properties.csv'))).import_data!(true) }.to change(Product, :count).by(1)
           (product = Product.last).product_properties.map(&:value).should == ["Rails"]
-          product.variants.count.should == 2
         end
 
         it "sets state to completed" do
