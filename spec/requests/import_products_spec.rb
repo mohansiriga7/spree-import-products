@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "Import products" do
   background do
-    sign_in_as! Factory(:admin_user)
+    sign_in_as! FactoryGirl.create(:admin_user)
   end
 
   scenario "admin should be able to import products and delete import" do
