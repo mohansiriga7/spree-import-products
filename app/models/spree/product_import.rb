@@ -218,7 +218,7 @@ module Spree
 
     def update_product(product, params_hash)
 
-      log('UPATE PRODUCT: ' + params_hash.inspect)
+      log('UPDATE PRODUCT: ' + params_hash.inspect)
       properties_hash = Hash.new
 
       # Array of special fields. Prevent adding them to properties.
