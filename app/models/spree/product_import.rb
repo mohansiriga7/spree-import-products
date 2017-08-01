@@ -173,7 +173,10 @@ module Spree
 
       rescue => err
         failure
-        log(msg='The import failed with this error: ' + err.inspect, :error)
+        msg = 'The import failed with this error: ' + err.inspect + \
+              "\n and this backtrace" + err.backtrace.join("\n")
+        require 'pry'; binding.pry # PRY BREAKPOINT (DEBUG)
+        log(msg, :error)
         raise ImportError, msg
       end
       # Finished Importing!
