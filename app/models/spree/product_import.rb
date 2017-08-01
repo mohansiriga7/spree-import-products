@@ -171,7 +171,7 @@ module Spree
         #@products_before_import.each { |p| p.destroy }
         #end
 
-      rescue => err
+      rescue StandardError => err
         failure
         msg = 'The import failed with this error: ' + err.inspect + \
               "\n and this backtrace" + err.backtrace.join("\n")
