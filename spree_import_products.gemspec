@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('capybara')
   s.add_development_dependency('launchy', '2.0.5')
   s.add_development_dependency('factory_girl')
+  s.add_development_dependency('pry')
 
   # # Commenting out because bundle install fails with this
   # if RUBY_VERSION < "1.9"
