@@ -146,9 +146,13 @@ module Spree
 
           log("#{pp product_information}",:debug)
 
-          variant_comparator_field = ProductImport.settings[:variant_comparator_field].try :to_sym
-          variant_comparator_column = col[variant_comparator_field]
+          variant_comparator_field = ProductImport.settings[:variant_comparator_field]&.to_sym
+          variant_comparator_column = col[variant_comparator_field] # might not be in col
 
+          unless variant_comparator_column
+            raise ImportError, "#{variant_comparator_field} is missing from the spreadsheet header."
+          end
+          
           # The fuck? This condition is... wow.
           if ProductImport.settings[:create_variants] and variant_comparator_column and
               p = Product.where(Product.table_name + '.' + variant_comparator_field.to_s => row[variant_comparator_column]).only(:product, :where).first
@@ -171,9 +175,11 @@ module Spree
         #@products_before_import.each { |p| p.destroy }
         #end
 
-      rescue => err
+      rescue StandardError => err
         failure
-        log(msg='The import failed with this error: ' + err.inspect, :error)
+        msg = 'The import failed with this error: ' + err.inspect + \
+              "\n and this backtrace" + err.backtrace.join("\n")
+        log(msg, :error)
         raise ImportError, msg
       end
       # Finished Importing!
@@ -218,7 +224,7 @@ module Spree
 
     def update_product(product, params_hash)
 
-      log('UPATE PRODUCT: ' + params_hash.inspect)
+      log('UPDATE PRODUCT: ' + params_hash.inspect)
       properties_hash = Hash.new
 
       # Array of special fields. Prevent adding them to properties.
