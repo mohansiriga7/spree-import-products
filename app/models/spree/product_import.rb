@@ -17,7 +17,7 @@ module Spree
       url: '/spree/product_imports/data-files/:basename_:timestamp.:extension'
 
     validates_attachment_presence :data_file
-    #Content type of csv vary in different browsers.
+    # Content type of csv vary in different browsers.
     validates_attachment :data_file, presence: true, content_type: { content_type: ['text/csv', 'text/plain', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'] }
 
     after_destroy :destroy_products
@@ -159,7 +159,7 @@ module Spree
             # Product exists
             p.update_attribute(:deleted_at, nil) if p.deleted_at #Un-delete product if it is there
             p.variants.each { |variant| variant.update_attribute(:deleted_at, nil) }
-            update_product(p,product_information)
+            update_product(p, product_information)
           else
             #product doesn't exists
             if (@skus_of_products_before_import.include?(product_information[:sku]))
@@ -213,8 +213,8 @@ module Spree
 
       params_hash.each do |field, value|
         if product.respond_to?("#{field}=")
-          product.send("#{field}=", value)
-        elsif not special_fields.include?(field.to_s) and property = Property.where("name = ?", field).first and value.present?
+          product.public_send("#{field}=", value)
+        elsif !special_fields.include?(field.to_s) && (property = Property.where('name = ?', field).first) && value.present?
           properties_hash[property] = value
         end
       end
@@ -237,8 +237,8 @@ module Spree
 
       # Here we only update product fields, because we update or create variant
       # after update the product.
-      product_fields=product.attribute_names
-      product_hash=Hash.new
+      product_fields = product.attribute_names
+      product_hash   = Hash.new
       params_hash.each do |key, value|
         if product_fields.include?(key.to_s)
           product_hash[key]=value

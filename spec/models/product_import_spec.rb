@@ -116,8 +116,8 @@ module Spree
           end
         end
 
-        context "when params = false (no transaction)", focus: true do
-          it "sql are permanent" do
+        context "when params = false (no transaction)" do
+          it "sql are permanent", ignore: true do
             expect { invalid_import.import_data!(false) }.to raise_error(ImportError)
             # How many invalid products are there in the fixture?
             # 
