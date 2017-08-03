@@ -146,9 +146,13 @@ module Spree
 
           log("#{pp product_information}",:debug)
 
-          variant_comparator_field = ProductImport.settings[:variant_comparator_field].try :to_sym
-          variant_comparator_column = col[variant_comparator_field]
+          variant_comparator_field = ProductImport.settings[:variant_comparator_field]&.to_sym
+          variant_comparator_column = col[variant_comparator_field] # might not be in col
 
+          unless variant_comparator_column
+            raise ImportError, "#{variant_comparator_field} is missing from the spreadsheet header."
+          end
+          
           # The fuck? This condition is... wow.
           if ProductImport.settings[:create_variants] and variant_comparator_column and
               p = Product.where(Product.table_name + '.' + variant_comparator_field.to_s => row[variant_comparator_column]).only(:product, :where).first
