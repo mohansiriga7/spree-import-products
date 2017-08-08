@@ -12,9 +12,31 @@ module Spree
 
     ENCODINGS= %w(UTF-8 iso-8859-1)
 
-    has_attached_file :data_file,
-      path: 'public/spree/product_imports/data-files/:basename_:timestamp.:extension',
-      url: '/spree/product_imports/data-files/:basename_:timestamp.:extension'
+    if ENV['PRODUCT_IMPORT_USE_AWS']
+      # REQUIRED ENV VARS TO USE S3:
+      #   PRODUCT_IMPORT_USE_AWS,
+      #   S3_BUCKET_NAME,
+      #   AWS_ACCESS_KEY_ID,
+      #   AWS_SECRET_ACCESS_KEY
+      attachment_config = {
+        url: ':s3_domain_url',
+        path: s3_path_prefix + '/spree/product_imports/data-files/:basename_:timestamp.:extension',
+        storage: :s3,
+        s3_protocol: :https,
+        s3_credentials: {
+          bucket: ENV['S3_BUCKET_NAME'],
+          access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+          secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+        }
+      }
+    else # default to local storage in assets folder
+      attachment_config = {
+        path: 'public/spree/product_imports/data-files/:basename_:timestamp.:extension',
+        url: '/spree/product_imports/data-files/:basename_:timestamp.:extension'
+      }
+    end
+
+    has_attached_file :data_file, attachment_config
 
     validates_attachment_presence :data_file
     # Content type of csv vary in different browsers.
@@ -194,6 +216,18 @@ module Spree
     def separator_char
       # unclear (to me) how separatorChar is defined by user.
       separatorChar || ','
+    end
+
+    # I use this to have add in a staging path prefix to not pollute production
+    # @return returns '/' + ENV['PRODUCT_IMPORT_S3_PREFIX'] or '' if var is blank
+    def s3_path_prefix
+      # urge to inline RISING
+      # (prefix = ENV['PRODUCT_IMPORT_S3_PREFIX']).blank? ? '' : '/' + prefix
+      unless (prefix = ENV['PRODUCT_IMPORT_S3_PREFIX']).blank?
+        '/' + prefix
+      else
+        ''
+      end
     end
 
     def create_product(params_hash)
