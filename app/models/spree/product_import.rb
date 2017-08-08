@@ -163,7 +163,7 @@ module Spree
           else
             #product doesn't exists
             if (@skus_of_products_before_import.include?(product_information[:sku]))
-              log(msg="SKU #{product_information[:sku]} exists, but slug #{row[variant_comparator_column]} not exists!! ", :error)
+              log(msg="SKU #{product_information[:sku]} exists, but slug #{row[variant_comparator_column]} doesn't!", :error)
               raise ProductError, msg
             end
             next unless create_product(product_information)
