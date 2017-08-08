@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency('spree_auth_devise')
   s.add_dependency('delayed_job_active_record')
   s.add_dependency('daemons')
-  s.add_dependency('coffee-script')
+  s.add_dependency('coffee-script') # TODO: is this a development dep?
 
   # s.add_development_dependency('spree_sample')
   s.add_development_dependency('sqlite3')
@@ -27,7 +27,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency('capybara')
   s.add_development_dependency('launchy', '2.0.5')
   s.add_development_dependency('factory_girl')
+  s.add_development_dependency('spree_frontend') # DEBUG
   s.add_development_dependency('pry')
+  s.add_development_dependency('dotenv')
 
   # # Commenting out because bundle install fails with this
   # if RUBY_VERSION < "1.9"
