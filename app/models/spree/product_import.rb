@@ -567,6 +567,13 @@ module Spree
       #si el producto existe. Por tanto, si estamos traduciendo este campo, lo tendremos
       #en dos columnas del csv. En una con el valor original, i en otra donde pondremos
       #la traducción.
+
+      # Translated above comment:
+      # We need to "duplicate" the field (currently, slug) that serves to detect
+      # if the product exists. Therefore, if we are translating this field, we
+      # will have it in two columns of the csv. In one with the original value,
+      # in another where we will put the translation.
+
       # if (params_hash.include?(ProductImport.settings[:variant_comparator_field_i18n]) )
       #   translations_names.delete(ProductImport.settings[:variant_comparator_field].to_s)
       #   #translations_names << ProductImport.settings[:variant_comparator_field_i18n].to_s
