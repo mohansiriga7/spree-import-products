@@ -12,3 +12,4 @@ nbproject
 spec/dummy
 Gemfile.lock
 public
+.env
