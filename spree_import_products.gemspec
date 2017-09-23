@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
 
-  s.add_dependency('spree_core', '~> 3.1.0')
+  s.add_dependency('spree_core', '>= 3.1.0')
   s.add_dependency('spree_auth_devise')
   s.add_dependency('delayed_job_active_record')
   s.add_dependency('daemons')
